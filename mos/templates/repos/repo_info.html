@@ -1,0 +1,41 @@
+{% include "_meta.html" %}
+<script type="text/javascript">
+var bool=document.referrer.indexOf("add");
+if(bool>0){document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加成功");}
+var bool=document.referrer.indexOf("modify");
+if(bool>0){document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修改成功");}
+</script>
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+  <dl style="margin-left:10px; color:#fff">
+    <dt><span class="f-24">{{repo.reponame}}</span> <span class="pl-10 f-12">{{repo.is_active}}</span></dt>
+    <dd class="pt-10 f-12" style="margin-left:0">备注：{{repo.comments}} </dd>
+  </dl>
+</div>
+<div class="page-container">
+	<div class="mt-20">
+	<table class="table table-border table-bordered table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">
+				<th width="20">ID</th>
+				<th width="200">权限配置项</th>
+			</tr>
+		</thead>
+		{% block body %}
+		<tbody>
+		{% for authitem in authitems %}
+			<tr class="text-c">
+				{% set authitem_loop = loop %}
+				<td>{{ authitem_loop.index }}</td>
+				<td style="text-align:left">{{ authitem[0] }}</td>
+			</tr>
+		{% else %}
+			<tr><td colspan=3>库中没有任何配置项</td></tr>
+		{% endfor %}
+		{% endblock %}
+		</tbody>
+	</table>
+	</div>
+</div>	
+</body>
+{% include "_footer.html" %}

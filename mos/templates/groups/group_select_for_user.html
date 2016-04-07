@@ -1,0 +1,77 @@
+﻿{% include "_meta.html" %}
+<title>添加用户组</title>
+</head>
+<body>
+<div class="page-container">
+	<form  class="form form-horizontal" action="/users/join/{{ userid}}" method="post">
+	<div class="cl pd-5 bg-1 bk-gray mt-5">
+		<span class="l">
+			
+				<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe600;</i> 添加</button>
+
+		</span> 
+	</div>
+	<div class="mt-20">
+	<table class="table table-border table-bordered table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">
+				<th width="10%"><input type="checkbox" name="" value=""></th>
+				<th width="10%">ID</th>
+				<th width="80%">用户组</th>
+			</tr>
+		</thead>
+		{% block body %}
+		<tbody>
+		{% for group in groups %}
+			<tr class="text-c">
+				<td><input type="checkbox" value="1" name="groupids[{{ group[0] }}]"></td>
+				<td>{{ group[0] }}</td>
+				<td>{{ group[1] }}</td>
+			</tr>
+		{% else %}
+            <tr><td colspan=4>未找到任何可用的用户组</td></tr>
+        {% endfor %}
+		{% endblock %}
+		</tbody>
+	</table>
+	</div>
+	</form>	
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='./lib/jquery/1.9.1/jquery.min.js') }}"></script> 
+<script type="text/javascript" src="{{ url_for('static', filename='./lib/layer/2.1/layer.js') }}"></script> 
+<script type="text/javascript" src="{{ url_for('static', filename='./lib/laypage/1.2/laypage.js') }}"></script> 
+<script type="text/javascript" src="{{ url_for('static', filename='./js/H-ui.js') }}"></script> 
+<script type="text/javascript" src="{{ url_for('static', filename='./js/H-ui.admin.js') }}"></script> 
+<script type="text/javascript">
+$(function(){
+	$('.table-sort tbody').on( 'click', 'tr', function () {
+		if ( $(this).hasClass('selected') ) {
+			$(this).removeClass('selected');
+		}
+		else {
+			table.$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
+		}
+	});
+});
+
+/*用户-添加*/
+function member_add(title,url,w,h){
+	layer_show(title,url,w,h);
+}
+/*用户-查看*/
+function member_show(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*用户-编辑*/
+function member_edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*用户-删除*/
+function member_del(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+
+</script> 
+</body>
+</html>

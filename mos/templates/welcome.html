@@ -1,0 +1,69 @@
+﻿{% include "_meta.html" %}
+<head>
+<title>我的桌面</title>
+</head>
+<body>
+{% block body %}
+<div class="page-container">
+	<p class="f-20 text-success">欢迎使用  SVN Master <span class="f-14"></span></p>
+	<table class="table table-border table-bordered table-bg">
+		<thead>
+			<tr>
+				<th colspan="7" scope="col">统计</th>
+			</tr>
+			<tr class="text-c">
+				<th width="20%"></th>
+				<th>配置库</th>
+				<th>权限项</th>
+				<th>用户</th>
+				<th>用户组</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="text-c">
+				<td>所有</td>
+				<td>{{ datas['repo_all_nums'] }}</td>
+				<td>{{ datas['authitem_all_nums'] }}</td>
+				<td>{{ datas['user_all_nums'] }}</td>
+				<td>{{ datas['group_all_nums'] }}</td>
+			</tr>
+			<tr class="text-c">
+				<td>可用</td>
+				<td>{{ datas['repo_active_nums'] }}</td>
+				<td>{{ datas['authitem_all_nums'] }}</td>
+				<td>{{ datas['user_active_nums'] }}</td>
+				<td>{{ datas['group_active_nums'] }}</td>
+			</tr>
+		</tbody>
+	</table>
+	<table class="table table-border table-bordered table-bg mt-20">
+		<thead>
+			<tr>
+				<th colspan="2" scope="col">配置信息</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td width="20%">SVN服务地址</td>
+				<td>{{ paras['url'] }}</td>
+			</tr>
+			<tr>
+				<td>SVN库物理路径</td>
+				<td>{{ paras['uri'] }}</td>
+			</tr>
+			<tr>
+				<td>SVN认证方式</td>
+				<td>{{ paras['authmode'] }}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+{% endblock %}
+<footer class="footer mt-20">
+	<div class="container">
+		<p>Thanks for jQuery、bootstrap、layer、laypage、Validform、iconfont、magicsuggest、icheck........<br>
+			Copyright &copy;2010-2016 SVN Master v1.1.1 All Rights Reserved.</p>
+	</div>
+</footer>
+</body>
+{% include "_footer.html" %}

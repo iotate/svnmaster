@@ -1,0 +1,95 @@
+{% include "_meta.html" %}
+<script type="text/javascript">
+
+</script>
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+  <dl style="margin-left:10px; color:#fff">
+    <dt><span class="f-24">{{authitems[0][0]}}</span></dt>
+    <dd class="pt-10 f-12" style="margin-left:0">路径：{{authitems[0][1]}} </dd>
+  </dl>
+</div>
+{% block body %}
+<div class="page-container">
+	<table class="table table-border table-bordered table-hover table-bg table-sort">
+	<tr>
+	<td>
+	<div class="cl pd-5 bg-1 bk-gray mt-5">
+		<span class="l">
+
+				<a title="添加用户组" href="javascript:;" onclick="location='/auth/group/join/{{authitemid}}'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户组</a>
+
+		</span> 
+	</div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="20">ID</th>
+					<th width="100">用户组名</th>
+					<th width="100">权限类型</th>
+					<th width="50">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for authgroup in authgroups %}
+				<tr class="text-c">
+					{% set authgroup_loop = loop %}
+					<td>{{ authgroup_loop.index }}</td>
+					<td>{{ authgroup[1] }}</td>
+					<td>{{ authgroup[2] }}</td>
+					<td class="td-manage">
+					<a title="删除" href="javascript:;" onclick="location='/auth/group/remove/{{authitemid}}+{{ authgroup[0] }}'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				</td>
+				</tr>
+			{% else %}
+				<tr><td colspan=4>配置项不包含任何用户组权限</td></tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</td>
+	<td></td>
+	<td valign="top">
+	<div class="cl pd-5 bg-1 bk-gray mt-5">
+		<span class="l">
+				<a title="添加用户" href="javascript:;" onclick="location='/auth/user/join/{{authitemid}}'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加用户</a>
+		</span> 
+	</div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-hover table-bg table-sort">
+			<thead>
+				<tr class="text-c">
+					<th width="20">ID</th>
+					<th width="100">全名</th>
+					<th width="100">登录名</th>
+					<th width="100">权限类型</th>
+					<th width="50">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for authuser in authusers %}
+				<tr class="text-c">
+					{% set authuser_loop = loop %}
+					<td>{{ authuser_loop.index }}</td>
+					<td>{{ authuser[1] }}</td>
+					<td>{{ authuser[2] }}</td>
+					<td>{{ authuser[3] }}</td>
+					<td class="td-manage">
+					<a title="删除" href="javascript:;" onclick="location='/auth/user/remove/{{authitemid}}+{{ authuser[0] }}'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				</td>
+				</tr>
+			{% else %}
+				<tr><td colspan=5>配置项不包含任何用户权限</td></tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	</td>
+	</tr>
+	</table>
+</div>
+{% endblock %}
+</body>
+{% include "_footer.html" %}
+

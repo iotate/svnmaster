@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+/* GitHub stylesheet for MarkdownPad (http://markdownpad.com) */
+/* Author: Nicolas Hery - http://nicolashery.com */
+/* Version: b13fe65ca28d2e568c6ed5d7f06581183df8f2ff */
+/* Source: https://github.com/nicolahery/markdownpad-github */
+
+/* RESET
+=============================================================================*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* BODY
+=============================================================================*/
+
+body {
+  font-family: Helvetica, arial, freesans, clean, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #fff;
+  padding: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body>*:first-child {
+  margin-top: 0 !important;
+}
+
+body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+/* BLOCKS
+=============================================================================*/
+
+p, blockquote, ul, ol, dl, table, pre {
+  margin: 15px 0;
+}
+
+/* HEADERS
+=============================================================================*/
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 20px 0 10px;
+  padding: 0;
+  font-weight: bold;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1 tt, h1 code, h2 tt, h2 code, h3 tt, h3 code, h4 tt, h4 code, h5 tt, h5 code, h6 tt, h6 code {
+  font-size: inherit;
+}
+
+h1 {
+  font-size: 28px;
+  color: #000;
+}
+
+h2 {
+  font-size: 24px;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h6 {
+  color: #777;
+  font-size: 14px;
+}
+
+body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+h1+p, h2+p, h3+p, h4+p, h5+p, h6+p {
+  margin-top: 10px;
+}
+
+/* LINKS
+=============================================================================*/
+
+a {
+  color: #4183C4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* LISTS
+=============================================================================*/
+
+ul, ol {
+  padding-left: 30px;
+}
+
+ul li > :first-child, 
+ol li > :first-child, 
+ul li ul:first-of-type, 
+ol li ol:first-of-type, 
+ul li ol:first-of-type, 
+ol li ul:first-of-type {
+  margin-top: 0px;
+}
+
+ul ul, ul ol, ol ol, ol ul {
+  margin-bottom: 0;
+}
+
+dl {
+  padding: 0;
+}
+
+dl dt {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: italic;
+  padding: 0;
+  margin: 15px 0 5px;
+}
+
+dl dt:first-child {
+  padding: 0;
+}
+
+dl dt>:first-child {
+  margin-top: 0px;
+}
+
+dl dt>:last-child {
+  margin-bottom: 0px;
+}
+
+dl dd {
+  margin: 0 0 15px;
+  padding: 0 15px;
+}
+
+dl dd>:first-child {
+  margin-top: 0px;
+}
+
+dl dd>:last-child {
+  margin-bottom: 0px;
+}
+
+/* CODE
+=============================================================================*/
+
+pre, code, tt {
+  font-size: 12px;
+  font-family: Consolas, "Liberation Mono", Courier, monospace;
+}
+
+code, tt {
+  margin: 0 0px;
+  padding: 0px 0px;
+  white-space: nowrap;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+}
+
+pre>code {
+  margin: 0;
+  padding: 0;
+  white-space: pre;
+  border: none;
+  background: transparent;
+}
+
+pre {
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  line-height: 19px;
+  overflow: auto;
+  padding: 6px 10px;
+  border-radius: 3px;
+}
+
+pre code, pre tt {
+  background-color: transparent;
+  border: none;
+}
+
+kbd {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #DDDDDD;
+    background-image: linear-gradient(#F1F1F1, #DDDDDD);
+    background-repeat: repeat-x;
+    border-color: #DDDDDD #CCCCCC #CCCCCC #DDDDDD;
+    border-image: none;
+    border-radius: 2px 2px 2px 2px;
+    border-style: solid;
+    border-width: 1px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 10px;
+    padding: 1px 4px;
+}
+
+/* QUOTES
+=============================================================================*/
+
+blockquote {
+  border-left: 4px solid #DDD;
+  padding: 0 15px;
+  color: #777;
+}
+
+blockquote>:first-child {
+  margin-top: 0px;
+}
+
+blockquote>:last-child {
+  margin-bottom: 0px;
+}
+
+/* HORIZONTAL RULES
+=============================================================================*/
+
+hr {
+  clear: both;
+  margin: 15px 0;
+  height: 0px;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  border-bottom: 4px solid #ddd;
+  padding: 0;
+}
+
+/* TABLES
+=============================================================================*/
+
+table th {
+  font-weight: bold;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 6px 13px;
+}
+
+table tr {
+  border-top: 1px solid #ccc;
+  background-color: #fff;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+/* IMAGES
+=============================================================================*/
+
+img {
+  max-width: 100%
+}
+</style>
+</head>
+<body>
+<h1>如何使用SVN Master</h1>
+<hr />
+<h2>功能说明</h2>
+<p>SVN Master是使用Python编写的基于Web的SVN（Subversion）管理工具，主要功能包括：</p>
+<ul>
+<li>SVN用户管理：支持用户添加、删除、修改密码等</li>
+<li>SVN用户组管理：支持用户组的添加、删除、修改等</li>
+<li>SVN配置库管理：支持配置库的新增、删除、修改名称</li>
+<li>SVN权限管理：支持基于路径的用户权限和用户组权限设置</li>
+<li>Apache集成：除了传统的svnserver认证模式，也支持Apache集成SVN时的htpasswd认证模式</li>
+</ul>
+<h2>使用之前</h2>
+<h3>依赖</h3>
+<p>SVN Master是使用Python编写的SVN（Subversion）管理工具，因此在使用前需安装以下软件：</p>
+<ul>
+<li>
+<p>Python：3.4 ＋    以及基于Python的以下模块：</p>
+<ul>
+<li>
+<p>Flask：0.10.1 +</p>
+</li>
+<li>
+<p>flask-sqlalchemy：2.1 +</p>
+</li>
+<li>
+<p>Flask-WTF：0.12 +</p>
+</li>
+<li>
+<p>Flask-Login：0.3.2 +</p>
+</li>
+<li>
+<p>flask-OpenID：1.2.5 +</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3>依赖的安装方法</h3>
+<p>1.首先安装Python:</p>
+<ul>
+<li>Windows版本,在<a href="https://www.python.org/downloads/windows/">这里</a>下载，默认选项安装即可</li>
+<li>
+<p>Linux版本，在<a href="https://www.python.org/downloads/source/">这里</a>下载源代码，安装方式如下：</p>
+<blockquote>
+<p>xz -d Python-3.5.1.tar.xz</p>
+<p>tar xf Python-3.5.1.tar -C /usr/local/src/</p>
+<p>cd /usr/local/src/Python-3.5.1/</p>
+<p>./configure --prefix=/usr/local/python35</p>
+<p>make -j8 &amp;&amp; make install</p>
+</blockquote>
+</li>
+</ul>
+<p>2.将Python路径加入系统变量：</p>
+<p>将Python的安装目录以及其Script文件夹加入系统变量：</p>
+<pre><code>&gt; C:\Python35\;
+&gt; C:\Python35\Scripts\;
+</code></pre>
+
+<ul>
+<li>
+Windows环境：
+<ul>
+<li>系统属性 - 高级 - 环境变量 - 系统变量 - Path</li>
+</ul>
+</li>
+<li>
+<p>Linux环境：</p>
+<blockquote>
+<p>编辑'~/.bash_profile'文件，将</p>
+<blockquote>
+<p>PATH=$PATH:$HOME/bin</p>
+</blockquote>
+<p>改为：</p>
+<blockquote>
+<p>PATH=$PATH:$HOME/bin:/usr/local/python35/bin</p>
+</blockquote>
+<p>使 python3.4 环境变量生效：</p>
+<blockquote>
+<p>. ~/.bash_profile</p>
+</blockquote>
+</blockquote>
+<p>3.安装Python相关的模块</p>
+</li>
+<li>
+<p>打开Shell,依次执行以下命令：</p>
+<blockquote>
+<p>pip install Flask</p>
+<p>pip install flask-sqlalchemy</p>
+<p>pip install Flask-WTF</p>
+<p>pip install Flask-Login</p>
+<p>pip install flask-OpenID</p>
+</blockquote>
+</li>
+</ul>
+<p>4.将<a href="https://subversion.apache.org/packages.html">SVN Command服务</a>文件包的bin目录（如：C:\svn1.9.3\bin;）加入系统环境变量，方法同上</p>
+<p>5.如果使用Apache集成SVN，需将Apache的bin目录（如：C:\Apache24\bin;）也加入系统环境变量，方法同上</p>
+<p>6.验证以上配置的正确性，打开CMD或Shell，输入：</p>
+<blockquote>
+<p>python</p>
+<p>htpasswd</p>
+</blockquote>
+<p>如果没有出现错误信息，说明配置成功。</p>
+<h2>开始使用</h2>
+<h3>部署</h3>
+<ul>
+<li>将本文件夹放置到任意目录即可</li>
+</ul>
+<h3>基本配置</h3>
+<p>系统提供了几个基本配置项如下，在根目录下的 'config.py' 文件中：</p>
+<pre><code>#本系统使用的端口号
+SERVER_PORT = 800
+
+#SVN配置库存放的根目录，以\\结尾
+REPOS_DIRS='d:\SVNMaster\Repos\\'
+#SVN的网络访问路径
+REPOS_BASE_URL='http://127.0.0.1/svn/'
+
+#SVN认证相关配置
+#支持httpd（即Apache集成方式）或svnserver
+SVN_AUTH_MODE = 'httpd' 
+#Apache集成方式下的权限（authz）和htpasswd（用户&amp;密码）文件位置
+SVN_HTTPD_AUTHZ = 'd:\SVNMaster\Repos\\authz'
+SVN_HTTPD_USERS = 'd:\SVNMaster\Repos\\htpasswd'
+</code></pre>
+
+<h3>启动</h3>
+<p>打开CMD 或 Shell，切换到上述 'config.py' 文件所在文件夹中，输入：</p>
+<blockquote>
+<p>python server.py</p>
+</blockquote>
+<p>然后打开127.0.0.1:800 （800为上一步设置的端口号）即可开始使用本系统</p>
+<p>如果启动过程中出现错误，请检查 安装 及 配置工作是否正确。</p>
+<h2>开始使用</h2>
+<h3>注意：</h3>
+<p>在本系统的操作，除配置库管理（新增、修改、删除）立即生效外，其它的如用户密码修改、权限授权等操作，应在操作完成后，点击 </p>
+<blockquote>
+<p>页面左上角 快捷 菜单 中的 刷新权限 菜单</p>
+</blockquote>
+<p>方可生效。</p>
+<h3>登录</h3>
+<p>系统的初始用户/密码为：</p>
+<blockquote>
+<p>用户名：admin</p>
+<p>密码：admin</p>
+</blockquote>
+<h2>功能</h2>
+<h3>建议的顺序</h3>
+<p>开始对SVN进行管理，建议顺序如下：</p>
+<ul>
+<li>新建配置库</li>
+<li>新建用户</li>
+<li>新建用户组</li>
+<li>将用户加入到用户组</li>
+<li>新建权限项（包括 配置库 和 权限路径 的一条记录）</li>
+<li>将权限项的权限授权给用户或用户组（建议尽可能使用 用户组 方式授权）</li>
+<li>刷新权限</li>
+</ul>
+<h3>图示</h3>
+<p>登录页面</p>
+<p><img src="./mos/static/img/howto/login.jpg" alt="Alt text" /></p>
+<p>欢迎信息页面
+<img src="./mos/static/img/howto/welcome.jpg" alt="Alt text" /></p>
+<p>用户管理页面
+<img src="./mos/static/img/howto/user.jpg" alt="Alt text" /></p>
+<p>用户信息页面
+<img src="./mos/static/img/howto/user-info.jpg" alt="Alt text" /></p>
+<p>用户组管理页面
+<img src="./mos/static/img/howto/group.jpg" alt="Alt text" /></p>
+<p>用户组信息页面
+<img src="./mos/static/img/howto/group-info.jpg" alt="Alt text" /></p>
+<p>配置库管理页面
+<img src="./mos/static/img/howto/repo.jpg" alt="Alt text" /></p>
+<p>权限项管理页面
+<img src="./mos/static/img/howto/authitem.jpg" alt="Alt text" /></p>
+<p>配置项授权页面
+<img src="./mos/static/img/howto/auth.jpg" alt="Alt text" /></p>
+<p>添加用户组授权页面
+<img src="./mos/static/img/howto/auth-group.jpg" alt="Alt text" /></p>
+<h3>It's very easy to use,isn't it?</h3>
+<h3>祝您使用愉快！</h3>
+<p>如需帮助，可邮件至<a href="eixxie@qq.com">EIXXIE(eixxie@qq.com)</a>.</p>
+
+</body>
+</html>
+<!-- This document was created with MarkdownPad, the Markdown editor for Windows (http://markdownpad.com) -->

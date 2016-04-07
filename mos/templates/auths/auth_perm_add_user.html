@@ -1,0 +1,106 @@
+{% include "_meta.html" %}
+<link href="{{ url_for('static', filename='./lib/bootstrap-3.3.5-dist/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ url_for('static', filename='./lib/jquery.magicsuggest/magicsuggest-min.css') }}" rel="stylesheet" type="text/css" />
+{% include "_footer.html" %}
+<script type="text/javascript" src="{{ url_for('static', filename='./lib/bootstrap-3.3.5-dist/js/bootstrap.min.js') }}"></script> 
+<script type="text/javascript" src="{{ url_for('static', filename='./lib/jquery.magicsuggest/magicsuggest-min.js') }}"></script> 
+<script type="text/javascript">
+$(document).ready(function() {
+	var jsonData = [];
+            var cities = 'gbtags.com,www.gbin1.com,New York,Los Angeles,Chicago,Houston,Paris,Marseille,Toulouse,Lyon,Bordeaux,Philadelphia,Phoenix,San Antonio,San Diego,Dallas,San Jose,Jacksonville'.split(',');
+            for(var i=0;i<cities.length;i++) jsonData.push({id:i,name:cities[i],status:i%2?'Already Visited':'Planned for visit',coolness:Math.floor(Math.random() * 10) + 1});
+	var ms2 = $('#ms2').magicSuggest({
+		data: '/users/data',
+		sortOrder: 'groupname',
+		allowFreeEntries: false,
+        editable: true
+	});
+	var ms5 = $('#ms5').magicSuggest({
+		data: jsonData,
+		sortOrder: 'groupname',
+		allowFreeEntries: false,
+        editable: true
+	});
+	
+});
+</script>
+<title>添加用户 - SVN Master</title>
+</head>
+<body>
+<article class="page-container">
+	{% block body %}
+	<form action="" method="post" action="/auth/user/join/{{itemid}}“ class="form form-horizontal" id="form-member-add">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户列表：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+			<div id="magicsuggest"><input id="ms2" style="width:400px;" type="text" name="userlist"/></div>
+			<div style="clear:both;"></div>
+			</div>
+		</div>
+		<br>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>权限：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="radio-box">
+					<input name="authperm" type="radio" id="authperm-n" value="none">
+					<label for="authperm-n">禁止</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="authperm-r" name="authperm"  value="readonly">
+					<label for="authperm-r">只读</label>
+				</div>
+				<div class="radio-box">
+					<input type="radio" id="authperm-w" name="authperm" value="write">
+					<label for="authperm-w">读写</label>
+				</div>
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<br>
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<br><br>
+			<label><span class="c-red">注意：</span>如此处所选择的用户/组已经被分配了权限，则之前的权限设置会被覆盖</label>
+		</div>
+	</form>
+	{% endblock %}
+</article>
+
+<!--_footer 作为公共模版分离出去--> 
+
+<!--/_footer /作为公共模版分离出去--> 
+
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+	
+	$("#form-member-add").validate({
+		rules:{
+			authperm:{
+				required:true,
+			},
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			$(form).ajaxSubmit();
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.$('.btn-refresh').click();
+			parent.layer.close(index);
+		}
+	});
+});
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
