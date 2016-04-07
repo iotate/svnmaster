@@ -82,32 +82,36 @@ SVN Master是使用Python编写的SVN（Subversion）管理工具，因此在使
 5.如果使用Apache集成SVN，需将Apache的bin目录（如：C:\Apache24\bin;）也加入系统环境变量，方法同上
 
 6.验证以上配置的正确性，打开CMD或Shell，输入：
-> python
+>
+>>python
 > 
-> htpasswd
+>>htpasswd
 
 如果没有出现错误信息，说明配置成功。
 
 ##部署与配置
 ###部署
 * 将本文件夹放置到任意目录即可
-###基本配置
-系统提供了几个基本配置项如下，在根目录下的 'config.py' 文件中：
 
-	本系统使用的端口号
-	SERVER_PORT = 800
-	
-	SVN配置库存放的根目录，以\\结尾
-	REPOS_DIRS='d:\SVNMaster\Repos\\'
-	SVN的网络访问路径
-	REPOS_BASE_URL='http://127.0.0.1/svn/'
-	
-	SVN认证相关配置
-	支持httpd（即Apache集成方式）或svnserver
-	SVN_AUTH_MODE = 'httpd' 
-	Apache集成方式下的权限（authz）和htpasswd（用户&密码）文件位置
-	SVN_HTTPD_AUTHZ = 'd:\SVNMaster\Repos\\authz'
-	SVN_HTTPD_USERS = 'd:\SVNMaster\Repos\\htpasswd'
+
+###基本配置
+* 系统提供了几个基本配置项如下，在根目录下的 'config.py' 文件中：
+
+		本系统使用的端口号
+		SERVER_PORT = 800
+		
+		SVN配置库存放的根目录，以\\结尾
+		REPOS_DIRS='d:\SVNMaster\Repos\\'
+		SVN的网络访问路径
+		REPOS_BASE_URL='http://127.0.0.1/svn/'
+		
+		SVN认证相关配置
+		支持httpd（即Apache集成方式）或svnserver
+		SVN_AUTH_MODE = 'httpd' 
+		Apache集成方式下的权限（authz）和htpasswd（用户&密码）文件位置
+		SVN_HTTPD_AUTHZ = 'd:\SVNMaster\Repos\\authz'
+		SVN_HTTPD_USERS = 'd:\SVNMaster\Repos\\htpasswd'
+
 
 ###启动
 打开CMD 或 Shell，切换到上述 'config.py' 文件所在文件夹中，输入：
