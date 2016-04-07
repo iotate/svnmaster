@@ -1,0 +1,27 @@
+{% include "_meta.html" %}
+<script type="text/javascript">
+var bool=document.referrer.indexOf("add");
+if(bool>0){document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加成功");}
+var bool=document.referrer.indexOf("modify");
+if(bool>0){document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修改成功");}
+</script>
+<body onunload="window.parent.location.reload()">
+<div class="cl pd-20" style=" background-color:#5bacb6">
+  <dl style="margin-left:10px; color:#fff">
+    <dt><span class="f-24">{{authitems[0][0]}}</span></dt>
+    <dd class="pt-10 f-12" style="margin-left:0">路径：{{authitems[0][1]}} </dd>
+  </dl>
+</div>
+<div class="pd-20">
+  <table class="table">
+    <tbody>
+      <tr>
+        <th class="text-r" width="50"></th>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</body>
+{% include "_footer.html" %}
+

@@ -1,0 +1,85 @@
+{% include "_meta.html" %}
+<title>权限配置项管理</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 权限配置项管理 <span class="c-gray en">&gt;</span> 权限项 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+	<div class="cl pd-5 bg-1 bk-gray mt-5">
+		<span class="l">
+			<form  class="form form-horizontal" action="/auth/item" method="post">
+				<!--<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> -->
+				<a href="javascript:;" onclick="member_add('添加配置项','{{ url_for('auth_item_add') }}','','240')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加配置项</a>
+				<input type="text" class="input-text" style="width:250px" placeholder="SVN库" id="searchitem" name="searchitem">
+				<button type="submit" class="btn btn-success radius" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜SVN库</button>
+			</form>
+		</span> 
+	</div>
+	<div class="mt-20">
+	<table class="table table-border table-bordered table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">
+				<th width="35">ID</th>
+				<th width="100">配置库</th>
+				<th width="800">权限项</th>
+				<th width="100">操作</th>
+			</tr>
+		</thead>
+		{% block body %}
+		<tbody>
+		{% for auth_item in auth_items %}
+			<tr class="text-c">
+			{% set auth_loop = loop %}
+				<td>{{ auth_loop.index }}</td>
+				<td>{{ auth_item[1] }}</td>
+				<td style="text-align:left"><u style="cursor:pointer" class="text-primary" onclick="member_show('配置项信息','/auth/item/info/{{auth_item[0]}}','','420','420')">{{ auth_item[2] }}</u></td>
+				<td class="td-manage">
+					<a title="编辑" href="javascript:;" onclick="member_edit('修改权限项信息','/auth/item/modify/{{auth_item[0]}}','4','','240')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+					<a style="text-decoration:none" class="ml-5" onClick="member_perm('配置项授权','/auth/perm/{{auth_item[0]}}')" href="javascript:;" title="配置项授权"><i class="Hui-iconfont">&#xe63f;</i></a> 
+					<a title="删除" href="javascript:;" onclick="member_del('确认删除权限项','/auth/item/del/{{auth_item[0]}}','4','500','400')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				</td>
+			</tr>
+		{% else %}
+            <tr><td colspan=9>未找到任何配置项</td></tr>
+        {% endfor %}
+		{% endblock %}
+		</tbody>
+	</table>
+	
+	</div>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='./lib/jquery/1.9.1/jquery.min.js') }}"></script> 
+<script type="text/javascript" src="{{ url_for('static', filename='./lib/layer/2.1/layer.js') }}"></script> 
+<script type="text/javascript" src="{{ url_for('static', filename='./lib/laypage/1.2/laypage.js') }}"></script> 
+<script type="text/javascript" src="{{ url_for('static', filename='./js/H-ui.js') }}"></script> 
+<script type="text/javascript" src="{{ url_for('static', filename='./js/H-ui.admin.js') }}"></script> 
+<script type="text/javascript">
+
+
+/*用户-添加*/
+function member_add(title,url,w,h){
+	layer_show(title,url,w,h);
+}
+/*用户-查看*/
+function member_show(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*用户-编辑*/
+function member_edit(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*用户-删除*/
+function member_del(title,url,id,w,h){
+	layer_show(title,url,w,h);
+}
+/*用户-授权*/
+function member_perm(title,url){
+	var index = layer.open({
+		type: 2,
+		title: title,
+		content: url
+	});
+	layer.full(index);
+}
+</script> 
+</body>
+</html>

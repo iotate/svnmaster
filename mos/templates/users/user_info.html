@@ -1,0 +1,69 @@
+{% include "_meta.html" %}
+<script type="text/javascript">
+var bool=document.referrer.indexOf("add");
+if(bool>0){document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加用户成功");}
+var bool=document.referrer.indexOf("modify");
+if(bool>0){document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修改用户成功");}
+</script>
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+  <dl style="margin-left:10px; color:#fff">
+    <dt><span class="f-24">{{user.fullname}}</span> <span class="pl-10 f-12">{{user.username}}</span><span class="pl-10 f-12">&nbsp;&nbsp;&nbsp;&nbsp;{{user.email}}</span></dt>
+    <dd class="pt-10 f-12" style="margin-left:0">类型：{{user.is_admin}}  &nbsp;&nbsp;&nbsp;&nbsp;状态：{{user.is_active}}&nbsp;&nbsp;&nbsp;&nbsp;最后修改：{{user.lasttime}}</dd>
+  </dl>
+</div>
+<div class="page-container">
+	<div class="cl pd-5 bg-1 bk-gray mt-5">
+		<span class="l">
+			<form  class="form form-horizontal" action="/users" method="post">
+				<a title="添加到组" href="javascript:;" onclick="location='/users/join/{{user.id}}'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加到组</a>
+			</form>
+		</span> 
+	</div>
+	<div class="mt-20">
+	<table class="table table-border table-bordered table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">
+				<th width="35">ID</th>
+				<th width="200">用户组</th>
+				<th width="50">操作</th>
+			</tr>
+		</thead>
+		{% block body %}
+		<tbody>
+		{% for group in groups %}
+			<tr class="text-c">
+				{% set group_loop = loop %}
+				<td>{{ group_loop.index }}</td>
+				<td>{{ group[1] }}</td>
+				<td class="td-manage">
+					<a title="删除" href="javascript:;" onclick="location='/users/leave/{{ group[0] }}+{{user.id}}'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+				</td>
+			</tr>
+		{% else %}
+			<tr><td colspan=3>用户不属于任何组</td></tr>
+		{% endfor %}
+		{% endblock %}
+		</tbody>
+	</table>
+	</div>
+</div>	
+</body>
+{% include "_footer.html" %}
+<script type="text/javascript">
+/*管理员-角色-添加*/
+function hasgroup_add(title,url,w,h){
+	parent.layer.layer_show(title,url,w,h);
+}
+
+/*管理员-角色-删除*/
+function hasgroup_del(obj,groupid,userid){
+	layer.confirm('确认要删除吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		
+		
+		$(obj).parents("tr").remove();
+		layer.msg('已删除!',{icon:1,time:1000});
+	});
+}
+</script>

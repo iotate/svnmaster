@@ -1,0 +1,39 @@
+{% include "_meta.html" %}
+{% include "_footer.html" %}
+<body>
+{% if info == "删除成功" %}
+<br><br><label><span class="c-red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ info }}</span></label>
+<script type="text/javascript">
+setTimeout("window.parent.location.reload()",2000)
+</script>
+{% else %}
+<div class="cl pd-20" style=" background-color:#5bacb6">
+  <dl style="margin-left:10px; color:#fff">
+    <dt><span class="f-24">{{authitems[0][0]}}</span></dt>
+    <dd class="pt-10 f-12" style="margin-left:0">路径：{{authitems[0][1]}} </dd>
+  </dl>
+</div>
+<div class="pd-20">
+  <table class="table">
+    <tbody>
+      <tr>
+        <th class="text-r" width="50"></th>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<form action="" method="post" class="form form-horizontal" id="form-member-modify" name="modifyuser">
+	<div class="pd-20">
+		<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+			<input class="btn btn-danger radius" type="submit" value="&nbsp;&nbsp;确认删除&nbsp;&nbsp;">
+		</div>
+		<div class="pd-20">
+			{% if info %}<label><span class="c-red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ info }}</span></label>{% endif %}
+		</div>
+	</div>
+</form>
+{% endif %}
+</body>
+
