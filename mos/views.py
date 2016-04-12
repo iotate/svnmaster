@@ -232,7 +232,22 @@ def user_join_group(userid):
     else:
         aviable_groups = Group.query.with_entities(Group.id, Group.groupname)
         return render_template('groups/group_select_for_user.html',userid = userid,groups=aviable_groups)
-        
+ 
+#查询用户权限
+@app.route('/users/auth/<username>')
+@login_required
+def user_auth(username):
+    user_auths =[]
+    u = User.query.filter_by(username = username).first()
+    user_auths=u.has_auths()
+    print(user_auths)
+    groups = u.has_groups()
+    for group in groups:
+        ugroup = Group.query.filter_by(id = group[0]).first()
+        group_auths = ugroup.has_auths()
+        for group_auth in group_auths:
+            user_auths.append(group_auth)
+    return render_template('users/user_auth.html',user = u,user_auths=user_auths)        
 #----------------------------------以上为 用户管理 功能-----------------------------------------#
 
 

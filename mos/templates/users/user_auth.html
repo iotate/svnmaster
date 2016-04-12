@@ -1,0 +1,58 @@
+{% include "_meta.html" %}
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+  <dl style="margin-left:10px; color:#fff">
+    <dt><span class="f-24">{{user.fullname}}</span> <span class="pl-10 f-12">{{user.username}}</span><span class="pl-10 f-12">&nbsp;&nbsp;&nbsp;&nbsp;{{user.email}}</span></dt>
+    <dd class="pt-10 f-12" style="margin-left:0">类型：{{user.is_admin}}  &nbsp;&nbsp;&nbsp;&nbsp;状态：{{user.is_active}}&nbsp;&nbsp;&nbsp;&nbsp;最后修改：{{user.lasttime}}</dd>
+  </dl>
+</div>
+<div class="page-container">
+	<div class="mt-20">
+	<table class="table table-border table-bordered table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">
+				<th width="35">ID</th>
+				<th width="80">用户组</th>
+				<th width="80">配置库</th>
+				<th width="300">路径</th>
+				<th width="50">权限</th>
+			</tr>
+		</thead>
+		{% block body %}
+		<tbody>
+		{% for userauth in user_auths %}
+			<tr class="text-c">
+				{% set userauth_loop = loop %}
+				<td>{{ userauth_loop.index }}</td>
+				<td>{{ userauth[0] }}</td>
+				<td>{{ userauth[1] }}</td>
+				<td style="text-align:left">{{ userauth[2] }}</td>
+				<td>{{ userauth[3] }}</td>
+			</tr>
+		{% else %}
+			<tr><td colspan=5>用户没有任何权限</td></tr>
+		{% endfor %}
+		{% endblock %}
+		</tbody>
+	</table>
+	</div>
+</div>	
+</body>
+{% include "_footer.html" %}
+<script type="text/javascript">
+/*管理员-角色-添加*/
+function hasgroup_add(title,url,w,h){
+	parent.layer.layer_show(title,url,w,h);
+}
+
+/*管理员-角色-删除*/
+function hasgroup_del(obj,groupid,userid){
+	layer.confirm('确认要删除吗？',function(index){
+		//此处请求后台程序，下方是成功后的前台处理……
+		
+		
+		$(obj).parents("tr").remove();
+		layer.msg('已删除!',{icon:1,time:1000});
+	});
+}
+</script>

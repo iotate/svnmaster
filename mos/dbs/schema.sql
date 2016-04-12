@@ -21,13 +21,13 @@ create table groups (
     id integer primary key autoincrement,
     groupname text not null unique,
 	comments text,
-	is_active integer not null,
+	status integer not null,
     lasttime text
 	
 );
-insert into groups('groupname','comments','is_active','lasttime') values('G-ADMIN','G开头 代表普通组','1','2012-03-31 20:58:40');
-insert into groups('groupname','comments','is_active','lasttime') values('D-RD','D开头 代表部门组','1','2012-03-31 20:58:40');
-insert into groups('groupname','comments','is_active','lasttime') values('P-MOS','P开头 代表产品或项目组','1','2012-03-31 20:58:40');
+insert into groups('groupname','comments','status','lasttime') values('G-ADMIN','G开头 代表普通组','1','2012-03-31 20:58:40');
+insert into groups('groupname','comments','status','lasttime') values('D-RD','D开头 代表部门组','1','2012-03-31 20:58:40');
+insert into groups('groupname','comments','status','lasttime') values('P-MOS','P开头 代表产品或项目组','1','2012-03-31 20:58:40');
 
 /** 用户-用户组对应表 **/
 drop table if exists uig;
@@ -90,7 +90,7 @@ create table auth_groups (
 	lasttime text
 );
 insert into auth_groups('authitem_id','group_id','authtype','lasttime') values('1','1','读写','2012-03-31 20:58:40');
-insert into auth_groups('authitem_id','group_id','authtype','lasttime') values('2','1','只读','2012-03-31 20:58:40');
+insert into auth_groups('authitem_id','group_id','authtype','lasttime') values('2','2','只读','2012-03-31 20:58:40');
 insert into auth_groups('authitem_id','group_id','authtype','lasttime') values('2','1','禁止','2012-03-31 20:58:40');
 
 /** 查询组中的用户名 
