@@ -9,7 +9,7 @@ if(bool>0){document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修改用户成�
 <div class="cl pd-20" style=" background-color:#5bacb6">
   <dl style="margin-left:10px; color:#fff">
     <dt><span class="f-24">{{user.fullname}}</span> <span class="pl-10 f-12">{{user.username}}</span><span class="pl-10 f-12">&nbsp;&nbsp;&nbsp;&nbsp;{{user.email}}</span></dt>
-    <dd class="pt-10 f-12" style="margin-left:0">类型：{{user.is_admin}}  &nbsp;&nbsp;&nbsp;&nbsp;状态：{{user.is_active}}&nbsp;&nbsp;&nbsp;&nbsp;最后修改：{{user.lasttime}}</dd>
+    <dd class="pt-10 f-12" style="margin-left:0">类型：{% if user.is_admin|int == 1 %}管理员{% else %}普通用户{% endif %}  &nbsp;&nbsp;&nbsp;&nbsp;状态：{% if user.is_active|int == 1 %}可用{% else %}已禁用{% endif %}&nbsp;&nbsp;&nbsp;&nbsp;最后修改：{{user.lasttime}}</dd>
   </dl>
 </div>
 <div class="page-container">

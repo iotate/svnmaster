@@ -1,0 +1,91 @@
+{% include "_meta.html" %}
+
+<title>修改密码 - SVN Master</title>
+</head>
+<body>
+<article class="page-container">
+{% block content %}
+	<form action="/users/mysvn/repwd" method="post" class="form form-horizontal" id="form-pwd-modify" name="repwd">
+	<!--<form action="/users/add" method="post" class="form form-horizontal" id="form-member-add">-->
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">姓名：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input id="" name="fullname" type="text" placeholder={{user.fullname}} class="input-text" readonly="readonly">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">登录名：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input id="" name="username" type="text" placeholder={{user.username}} class="input-text" readonly="readonly">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>原密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input id="" name="password" type="text" class="input-text">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>新密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input id="" name="password_new1" type="text" class="input-text">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>确认新密码：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input id="" name="password_new2" type="text" class="input-text">
+			</div>
+		</div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+				<input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+				{% if info %}<label"><span class="c-red">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ info }}</span></label>{% endif %}
+			</div>
+		</div>
+	</form>
+{% endblock %}
+</article>
+
+{% include "_footer.html" %}
+
+<!--请在下方写此页面业务相关的脚本--> 
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+	
+	$("#form-pwd-modify").validate({
+		rules:{
+			password_new1:{
+				required:true,
+				minlength:2,
+				maxlength:16
+			},
+			password_new2:{
+				required:true,
+				minlength:2,
+				maxlength:16
+			},
+			password:{
+				required:true,
+			},
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			$(form).ajaxSubmit();
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.$('.btn-refresh').click();
+			parent.layer.close(index);
+		}
+	});
+});
+</script> 
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

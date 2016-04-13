@@ -42,6 +42,62 @@ def index():
         return redirect(url_for('login'))
     else:
         return render_template('index.html',user=user)
+    
+#普通用户登录界面    
+@app.route('/mysvn')
+@login_required
+def mysvn():
+    user = g.user
+    #print(user)
+    if not current_user.is_authenticated:
+        return redirect(url_for('login'))
+    else:
+        return render_template('mysvn.html',user=user)
+
+#普通用户登录视图
+@app.route('/users/mysvn')
+@login_required
+def user_mysvn():
+    user = g.user
+    user_auths =[]
+    u = User.query.filter_by(username = user.username).first()
+    user_auths=u.has_auths()
+    #print(user_auths)
+    groups = u.has_groups()
+    for group in groups:
+        ugroup = Group.query.filter_by(id = group[0]).first()
+        group_auths = ugroup.has_auths()
+        for group_auth in group_auths:
+            user_auths.append(group_auth)
+    return render_template('users/user_mysvn.html',user = u,user_auths=user_auths)   
+
+#普通用户修改密码
+@app.route('/users/mysvn/repwd', methods=['GET', 'POST'])
+@login_required
+def user_mysvn_repwd():
+    info = ''
+    user = g.user
+    if request.method == 'POST':
+        if len(request.form['password']) ==0: 
+            info = '原密码不能为空！'
+        elif request.form['password'] != user.password:
+            info = '原密码不正确！'
+        elif len(request.form['password_new1']) ==0 or len(request.form['password_new2']) ==0:
+            info = '新密码不能为空'
+        elif request.form['password_new1'] != request.form['password_new2']:
+            info = '两次输入的新密码不一致'
+        else:
+            user = db.session.query(User).filter_by(username = user.username).first()
+            user.password = request.form['password_new2']
+            try:
+                db.session.commit()
+                info = '修改成功'
+            except:
+                info = '暂时无法修改，请稍后再试'
+        return render_template('users/user_mysvn_repwd.html',user=user,info=info)
+    else:
+        user = User.query.filter_by(username = user.username).first()
+        return render_template('users/user_mysvn_repwd.html',user=user)
 
 #登录界面，判断填写信息与数据库信息是否一致
 @app.route('/login', methods=['GET', 'POST'])
@@ -57,7 +113,9 @@ def login():
             if u==None or request.form['password'] != u.password: 
                 error = '用户名或密码错误！'
             elif u.is_admin !=1:
-                error = '非管理员用户不能登录！'
+                #error = '非管理员用户不能登录！'
+                login_user(u)
+                return redirect(url_for("mysvn"))
             elif u.is_active !=1:
                 error = '用户未激活，请联系管理员！'
             else:
@@ -240,14 +298,17 @@ def user_auth(username):
     user_auths =[]
     u = User.query.filter_by(username = username).first()
     user_auths=u.has_auths()
-    print(user_auths)
+    #print(user_auths)
     groups = u.has_groups()
     for group in groups:
         ugroup = Group.query.filter_by(id = group[0]).first()
         group_auths = ugroup.has_auths()
         for group_auth in group_auths:
             user_auths.append(group_auth)
-    return render_template('users/user_auth.html',user = u,user_auths=user_auths)        
+    return render_template('users/user_auth.html',user = u,user_auths=user_auths)    
+
+
+
 #----------------------------------以上为 用户管理 功能-----------------------------------------#
 
 
@@ -366,6 +427,15 @@ def group_join_user(groupid):
     else:
         aviable_users = User.query.with_entities(User.id, User.fullname,User.username)
         return render_template('users/user_select_for_group.html',groupid = groupid,users=aviable_users)
+    
+#查询用户组权限
+@app.route('/groups/auth/<groupname>')
+@login_required
+def group_auth(groupname):
+    group_auths =[]
+    ugroup = Group.query.filter_by(groupname = groupname).first()
+    group_auths = ugroup.has_auths()
+    return render_template('groups/group_auth.html',group=ugroup,group_auths=group_auths)
 #----------------------------------以上为 用户组管理 功能-----------------------------------------#
 
 #----------------------------------以下为 SVN库管理 功能-----------------------------------------#

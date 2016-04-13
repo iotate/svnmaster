@@ -1,0 +1,40 @@
+{% include "_meta.html" %}
+<body>
+<div class="cl pd-20" style=" background-color:#5bacb6">
+  <dl style="margin-left:10px; color:#fff">
+    <dt><span class="f-24">{{group.groupname}}</span></dt>
+    <dd class="pt-10 f-12" style="margin-left:0">状态：{% if group.status|int == 1 %}可用{% else %}已禁用{% endif %}&nbsp;&nbsp;&nbsp;&nbsp;最后修改：{{group.lasttime}}</dd>
+  </dl>
+</div>
+<div class="page-container">
+	<div class="mt-20">
+	<table class="table table-border table-bordered table-hover table-bg table-sort">
+		<thead>
+			<tr class="text-c">
+				<th width="25">ID</th>
+				<th width="80">配置库</th>
+				<th width="300">路径</th>
+				<th width="30">权限</th>
+			</tr>
+		</thead>
+		{% block body %}
+		<tbody>
+		{% for group_auth in group_auths %}
+			<tr class="text-c">
+				{% set group_auth_loop = loop %}
+				<td>{{ group_auth_loop.index }}</td>
+				<td>{{ group_auth[1]}}</td>
+				<td style="text-align:left">{{ group_auth[2] }}</td>
+				<td>{{ group_auth[3] }}</td>
+			</tr>
+		{% else %}
+			<tr><td colspan=4>该组没有任何权限</td></tr>
+		{% endfor %}
+		{% endblock %}
+		</tbody>
+	</table>
+	</div>
+</div>	
+</body>
+{% include "_footer.html" %}
+

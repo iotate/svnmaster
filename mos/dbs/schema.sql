@@ -13,7 +13,8 @@ create table users (
 );
 insert into users('fullname','username','password','email','comments','is_admin','is_active','lasttime') values('所有用户','*','idonotknowyoudonotknowalso','all@iota.com','我代表所有用户','0','1','2012-03-31 20:58:40');
 insert into users('fullname','username','password','email','comments','is_admin','is_active','lasttime') values('管理员','admin','admin','admin@iota.com','我是超级用户','1','1','2012-03-31 20:58:40');
-insert into users('fullname','username','password','email','comments','is_admin','is_active','lasttime') values('大师','svnmaster','svnmaster','binnacler@iota.com','我是大师','1','1','2012-03-31 20:58:40');
+insert into users('fullname','username','password','email','comments','is_admin','is_active','lasttime') values('大师','mos','mos','mos@iota.com','我是普通用户','0','1','2012-03-31 20:58:40');
+
 
 /** 用户组表 **/
 drop table if exists groups;
@@ -77,8 +78,10 @@ create table auth_users (
 	lasttime text
 );
 insert into auth_users('authitem_id','user_id','authtype','lasttime') values('1','2','读写','2012-03-31 20:58:40');
-insert into auth_users('authitem_id','user_id','authtype','lasttime') values('2','3','禁止','2012-03-31 20:58:40');
-insert into auth_users('authitem_id','user_id','authtype','lasttime') values('3','3','禁止','2012-03-31 20:58:40');
+insert into auth_users('authitem_id','user_id','authtype','lasttime') values('2','2','禁止','2012-03-31 20:58:40');
+insert into auth_users('authitem_id','user_id','authtype','lasttime') values('3','2','禁止','2012-03-31 20:58:40');
+insert into auth_users('authitem_id','user_id','authtype','lasttime') values('4','2','禁止','2012-03-31 20:58:40');
+insert into auth_users('authitem_id','user_id','authtype','lasttime') values('5','3','禁止','2012-03-31 20:58:40');
 
 /** 配置库-用户组-权限表 **/
 drop table if exists auth_groups;
@@ -91,7 +94,7 @@ create table auth_groups (
 );
 insert into auth_groups('authitem_id','group_id','authtype','lasttime') values('1','1','读写','2012-03-31 20:58:40');
 insert into auth_groups('authitem_id','group_id','authtype','lasttime') values('2','2','只读','2012-03-31 20:58:40');
-insert into auth_groups('authitem_id','group_id','authtype','lasttime') values('2','1','禁止','2012-03-31 20:58:40');
+insert into auth_groups('authitem_id','group_id','authtype','lasttime') values('1','2','禁止','2012-03-31 20:58:40');
 
 /** 查询组中的用户名 
 select users.id as userid,fullname,username FROM users CROSS JOIN uig where users.id = uig.user_id and uig.group_id = '1' order by username;
