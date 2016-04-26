@@ -102,6 +102,9 @@ class User(UserMixin,Base):
 
         def is_active(self):
             return True
+        
+        def is_admin(self):
+            return self.is_admin        
 
         def is_anonymous(self):
             return False

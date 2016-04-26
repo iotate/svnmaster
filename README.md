@@ -98,7 +98,7 @@ SVN Master是使用Python编写的SVN（Subversion）管理工具，因此在使
 * 系统提供了几个基本配置项如下，在根目录下的 'config.py' 文件中：
 
 		本系统使用的端口号
-		SERVER_PORT = 800
+		SERVER_PORT = 358
 		
 		SVN配置库存放的根目录，以\\结尾
 		REPOS_DIRS='d:\SVNMaster\Repos\\'
@@ -117,7 +117,7 @@ SVN Master是使用Python编写的SVN（Subversion）管理工具，因此在使
 打开CMD 或 Shell，切换到上述 'config.py' 文件所在文件夹中，输入：
 > python server.py
 
-然后打开127.0.0.1:800 （800为上一步设置的端口号）即可开始使用本系统
+然后打开127.0.0.1:358 （358为上一步设置的端口号）即可开始使用本系统
 
 如果启动过程中出现错误，请检查 安装 及 配置工作是否正确。
 

@@ -6,6 +6,7 @@ from mos import app
 from flask import Flask, request, session, g, redirect, url_for, abort, render_template, flash,jsonify,json
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext.sqlalchemy import SQLAlchemy
+from functools import wraps
 from wtforms import Form, BooleanField, TextField, PasswordField, validators
 from mos import app, db, lm
 from mos.models.forms import UserForm,GroupForm,RepoForm,AuthItemForm
@@ -16,6 +17,19 @@ from mos.utils.functions import create_repo,del_repo,change_repo,get_repo_path
 from mos.utils.authz import gen_httpd_authzs,gen_httpd_users,refresh_all_users_auths,add_httpd_user,del_httpd_user,repwd_httpd_user
 from config import SQLALCHEMY_DATABASE_URI,REPOS_DIRS,REPOS_BASE_URL,SVN_HTTPD_AUTHZ,SVN_AUTH_MODE
 
+#定义管理员权限要求装饰函数
+def admin_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if not current_user.is_authenticated:
+            return lm.unauthorized()
+        if current_user.is_admin !=1:
+            #return lm.unauthorized() 
+            return redirect(url_for("mysvn"))
+        return func(*args, **kwargs)
+    return decorated_view
+
+            
 #从数据库中加载用户
 @lm.user_loader
 def load_user(user_id):
@@ -34,7 +48,7 @@ def page_not_found(error):
 #访问根目录时，判断是否已经登录
 @app.route('/')
 @app.route('/index')
-@login_required
+@admin_required
 def index():
     user = g.user
     #print(user)
@@ -131,7 +145,7 @@ def logout():
 
 #欢迎页面
 @app.route('/welcome')
-@login_required
+@admin_required
 def welcome():
     infos={'url':REPOS_BASE_URL,'uri':REPOS_DIRS,'authmode':SVN_AUTH_MODE}
     user_all_nums = db_session.query(User).count()
@@ -151,7 +165,8 @@ def welcome():
 #用户管理页面
 @app.route('/users', methods = ['GET', 'POST'])
 @app.route('/users/<int:page>', methods = ['GET', 'POST'])
-@login_required
+#@login_required
+@admin_required
 def user_list():
     searchitem =''
     if request.method == 'POST':
@@ -163,23 +178,23 @@ def user_list():
     return render_template('users/user_list.html', users=users,searchitem = searchitem)
 
 @app.route('/users/data', methods = ['GET', 'POST'])
-@login_required
+@admin_required
 def users_data():
     return GetData('users-json','all')
 
 @app.route('/groups/data', methods = ['GET', 'POST'])
-@login_required
+@admin_required
 def groups_data():
     return GetData('groups-json','all')
 
 @app.route('/repos/data', methods = ['GET', 'POST'])
-@login_required
+@admin_required
 def repos_data():
     return GetData('repos-json','all')
 
 #增加用户
 @app.route('/users/add', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def user_add():
     info = ''
     form = UserForm()
@@ -206,7 +221,7 @@ def user_add():
 
 #删除用户
 @app.route('/users/del/<username>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def user_del(username):
     info = ''
     user = User.query.filter_by(username = username).first()
@@ -223,7 +238,7 @@ def user_del(username):
     
 #修改用户信息
 @app.route('/users/modify/<username>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def user_modify(username):
     info = ''
     form = UserForm()
@@ -256,7 +271,7 @@ def user_modify(username):
     
 #查询用户信息
 @app.route('/users/info/<username>')
-@login_required
+@admin_required
 def user_info(username):
     u = User.query.filter_by(username = username).first()
     if u == None:
@@ -269,7 +284,7 @@ def user_info(username):
 
 #用户信息视图中，将用户从组中删除
 @app.route('/users/leave/<groupid>+<userid>')
-@login_required
+@admin_required
 def user_leave_group(groupid,userid):
     u = User.query.filter_by(id = userid).first()
     u.leavegroup(groupid)
@@ -277,7 +292,7 @@ def user_leave_group(groupid,userid):
 
 #用户信息视图中，将用户加入组
 @app.route('/users/join/<userid>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def user_join_group(userid):
     if request.method == 'POST':
         u = User.query.filter_by(id = userid).first()
@@ -293,7 +308,7 @@ def user_join_group(userid):
  
 #查询用户权限
 @app.route('/users/auth/<username>')
-@login_required
+@admin_required
 def user_auth(username):
     user_auths =[]
     u = User.query.filter_by(username = username).first()
@@ -317,7 +332,7 @@ def user_auth(username):
 @app.route('/groups', methods = ['GET', 'POST'])
 @app.route('/groups/list', methods = ['GET', 'POST'])
 @app.route('/groups/list/<int:page>', methods = ['GET', 'POST'])
-@login_required
+@admin_required
 def group_list():
     if request.method == 'POST':
         if len(request.form['searchitem']) !=0: 
@@ -328,7 +343,7 @@ def group_list():
 
 #增加用户组
 @app.route('/groups/add', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def group_add():
     info = ''
     form = GroupForm()
@@ -349,7 +364,7 @@ def group_add():
 
 #删除用户组
 @app.route('/groups/del/<groupname>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def group_del(groupname):
     info = ''
     group = Group.query.filter_by(groupname = groupname).first()
@@ -366,7 +381,7 @@ def group_del(groupname):
 
 #修改用户组信息
 @app.route('/groups/modify/<groupname>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def group_modify(groupname):
     info = ''
     form = GroupForm()
@@ -391,7 +406,7 @@ def group_modify(groupname):
     
 #获取用户组信息
 @app.route('/groups/info/<groupname>')
-@login_required
+@admin_required
 def group_info(groupname):
     group = Group.query.filter_by(groupname = groupname).first()
     if group == None:
@@ -403,7 +418,7 @@ def group_info(groupname):
 
 #组信息视图中，将用户从组中删除
 @app.route('/groups/remove/<groupid>+<userid>')
-@login_required
+@admin_required
 def group_remove_user(groupid,userid):
     u = User.query.filter_by(id = userid).first()
     u.leavegroup(groupid)
@@ -412,7 +427,7 @@ def group_remove_user(groupid,userid):
 
 #组信息视图中，将用户加入组
 @app.route('/groups/join/<groupid>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def group_join_user(groupid):
     if request.method == 'POST':
         group = Group.query.filter_by(id = groupid).first()
@@ -430,7 +445,7 @@ def group_join_user(groupid):
     
 #查询用户组权限
 @app.route('/groups/auth/<groupname>')
-@login_required
+@admin_required
 def group_auth(groupname):
     group_auths =[]
     ugroup = Group.query.filter_by(groupname = groupname).first()
@@ -442,7 +457,7 @@ def group_auth(groupname):
 #SVN权限管理页面
 @app.route('/repos', methods = ['GET', 'POST'])
 @app.route('/repos/<int:page>', methods = ['GET', 'POST'])
-@login_required
+@admin_required
 def repo_list():
     repo_info=[]
     repo_list=[]
@@ -476,7 +491,7 @@ def repo_list():
 
 #增加SVN库
 @app.route('/repos/add', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def repo_add():
     info = ''
     form = RepoForm()
@@ -502,7 +517,7 @@ def repo_add():
 
 #删除SVN库
 @app.route('/repos/del/<reponame>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def repo_del(reponame):
     info = ''
     repo = Repo.query.filter_by(reponame = reponame).first()
@@ -524,7 +539,7 @@ def repo_del(reponame):
     
 #修改SVN库信息
 @app.route('/repos/modify/<reponame>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def repo_modify(reponame):
     info = ''
     form = RepoForm()
@@ -553,7 +568,7 @@ def repo_modify(reponame):
     
 #查询SVN库信息
 @app.route('/repos/info/<reponame>')
-@login_required
+@admin_required
 def repo_info(reponame):
     authitems=[]
     repo = Repo.query.filter_by(reponame = reponame).first()
@@ -569,7 +584,7 @@ def repo_info(reponame):
 #SVN配置项管理页面
 @app.route('/auth/item', methods = ['GET', 'POST'])
 @app.route('/auth/item/<int:page>', methods = ['GET', 'POST'])
-@login_required
+@admin_required
 def auth_item_list():
     auth_items=[]
     searchitem = ''
@@ -590,7 +605,7 @@ def auth_item_list():
 
 #增加配置项
 @app.route('/auth/item/add', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def auth_item_add():
     info = ''
     form = AuthItemForm()
@@ -619,7 +634,7 @@ def auth_item_add():
 
 #删除配置项
 @app.route('/auth/item/del/<authitemid>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def auth_item_del(authitemid):
     info = ''
     authitem = AuthItem.query.filter_by(id = authitemid).first()
@@ -637,7 +652,7 @@ def auth_item_del(authitemid):
     
 #修改配置项信息
 @app.route('/auth/item/modify/<authitemid>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def auth_item_modify(authitemid):
     info = ''
     form = AuthItemForm()
@@ -663,7 +678,7 @@ def auth_item_modify(authitemid):
     
 #查询配置项信息
 @app.route('/auth/item/info/<authitemid>')
-@login_required
+@admin_required
 def auth_item_info(authitemid):
     authitem = AuthItem.query.filter_by(id = authitemid).first()
     authitems = GetData('authiteminfo',[str(authitem.id)])
@@ -676,7 +691,7 @@ def auth_item_info(authitemid):
 #----------------------------------以下为 SVN权限管理 功能-----------------------------------------#
 #SVN权限管理页面
 @app.route('/auth/perm/<itemid>', methods = ['GET', 'POST'])
-@login_required
+@admin_required
 def auth_item_perm(itemid):
     print(itemid)
     authitem = AuthItem.query.filter_by(id = itemid).first()
@@ -687,7 +702,7 @@ def auth_item_perm(itemid):
 
 #配置项信息视图中，将用户权限从配置项中删除
 @app.route('/auth/user/remove/<itemid>+<userid>')
-@login_required
+@admin_required
 def auth_remove_user(itemid,userid):
     authitem = AuthItem.query.filter_by(id = itemid).first()
     authitem.removeuser(userid)
@@ -695,7 +710,7 @@ def auth_remove_user(itemid,userid):
 
 #配置项信息视图中，将用户组权限从配置项中删除
 @app.route('/auth/group/remove/<itemid>+<groupid>')
-@login_required
+@admin_required
 def auth_remove_group(itemid,groupid):
     authitem = AuthItem.query.filter_by(id = itemid).first()
     authitem.removegroup(groupid)
@@ -703,7 +718,7 @@ def auth_remove_group(itemid,groupid):
 
 #配置项信息视图中，加入用户权限
 @app.route('/auth/user/join/<itemid>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def auth_join_user(itemid):
     userlist=[]
     if request.method == 'POST':
@@ -721,7 +736,7 @@ def auth_join_user(itemid):
 
 #配置项信息视图中，加入用户组权限
 @app.route('/auth/group/join/<itemid>', methods=['GET', 'POST'])
-@login_required
+@admin_required
 def auth_join_group(itemid):
     grouplist=[]
     if request.method == 'POST':
@@ -739,7 +754,7 @@ def auth_join_group(itemid):
 
 #重新生成Authz文件    
 @app.route('/auth/perm/refresh', methods = ['GET', 'POST'])
-@login_required
+@admin_required
 def auth_perm_refresh():
     #调用Authz文件生成函数
     refresh_all_users_auths()
