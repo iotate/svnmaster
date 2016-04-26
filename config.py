@@ -8,7 +8,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 #本系统使用的端口号
-SERVER_PORT = 80
+SERVER_PORT = 358
 
 #SVN配置库存放的根目录，以\\结尾
 REPOS_DIRS='d:\SVNMaster\Repos\\'

@@ -32,7 +32,7 @@
 			<tr class="text-c">
 				<td><input type="checkbox" value="1" name=""></td>
 				<td>{{ group.id }}</td>
-				<td><u style="cursor:pointer" class="text-primary" onclick="member_show('用户组信息','/groups/info/{{group.groupname}}','','420','420')">{{ group.groupname }}</u></td>
+				<td><u style="cursor:pointer" class="text-primary" onclick="member_show('用户组权限','/groups/auth/{{group.groupname}}','','660','510')">{{ group.groupname }}</u></td>
 				<td style="text-align:left">{{ group.comments }}</td>
 				{% if group.status|int == 1 %}
 				<td class="td-status"><span class="label label-success radius">可用</span></td>
@@ -41,6 +41,7 @@
 				{% endif %}
 				<td class="td-manage">
 					<a title="编辑" href="javascript:;" onclick="member_edit('修改用户组信息','/groups/modify/{{group.groupname}}','4','','280')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+					<a title="编辑" href="javascript:;" onclick="member_edit('修改用户组用户','/groups/info/{{group.groupname}}','4','420','420')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe62c;</i></a>
 					<a title="删除" href="javascript:;" onclick="member_del('确认删除用户组','/groups/del/{{group.groupname}}','4','500','400')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 				</td>
 			</tr>

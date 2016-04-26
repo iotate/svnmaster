@@ -9,7 +9,7 @@ if(bool>0){document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修改用户组�
 <div class="cl pd-20" style=" background-color:#5bacb6">
   <dl style="margin-left:10px; color:#fff">
     <dt><span class="f-24">{{group.groupname}}</span></dt>
-    <dd class="pt-10 f-12" style="margin-left:0">状态：{{group.status}}&nbsp;&nbsp;&nbsp;&nbsp;最后修改：{{group.lasttime}}</dd>
+    <dd class="pt-10 f-12" style="margin-left:0">状态：{% if group.status|int == 1 %}可用{% else %}已禁用{% endif %}&nbsp;&nbsp;&nbsp;&nbsp;最后修改：{{group.lasttime}}</dd>
   </dl>
 </div>
 <div class="page-container">

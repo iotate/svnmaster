@@ -76,6 +76,16 @@ class User(UserMixin,Base):
         else:
             return False
 
+    #列出该用户所属的权限    
+    def has_auths(self):
+        userauths =[]
+        conn = engine.connect()
+        sql = 'select reponame,authitem,authtype from auth_users cross join users,repos,auth_items where auth_users.user_id=users.id and auth_users.authitem_id = auth_items.id and auth_items.repo_id = repos.id and users.id = \'' + str(self.id) +'\' order by reponame,authitem,authtype'
+        rs = conn.execute(sql)
+        for r in rs:
+            userauths.append([' ',r.reponame,r.authitem,r.authtype])
+        return userauths
+
     def __init__(self, fullname=None, username=None, password=None, email=None,comments=None,is_admin=0,is_active=1,lasttime=None):
         #self.id = id
         self.fullname = fullname
@@ -92,6 +102,9 @@ class User(UserMixin,Base):
 
         def is_active(self):
             return True
+        
+        def is_admin(self):
+            return self.is_admin        
 
         def is_anonymous(self):
             return False
@@ -127,6 +140,7 @@ def getGroup(columns=None):
 
 def getGroupFactory(columns=None):
     return partial(getGroup, columns=columns)
+
 #用户组表定义
 class Group(Base):
     __tablename__ = 'groups'
@@ -169,6 +183,16 @@ class Group(Base):
             return True
         else:
             return False    
+
+    #列出该用户组所有的权限    
+    def has_auths(self):
+        groupauths =[]
+        conn = engine.connect()
+        sql = 'select groupname,reponame,authitem,authtype from auth_groups cross join groups,repos,auth_items where auth_groups.group_id=groups.id and auth_groups.authitem_id = auth_items.id and auth_items.repo_id = repos.id and groups.id = \'' + str(self.id) +'\' order by groupname,reponame,authitem,authtype'
+        rs = conn.execute(sql)
+        for r in rs:
+            groupauths.append([r.groupname,r.reponame,r.authitem,r.authtype])
+        return groupauths
     
     def __init__(self, groupname=None, comments=None,status=1,lasttime=None):
         #self.id = id

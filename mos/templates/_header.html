@@ -5,6 +5,7 @@
 			<a class="logo navbar-logo-m f-l mr-10 visible-xs" href="/">SVN Master</a>
 			<span class="logo navbar-slogan f-l mr-10 hidden-xs">v1.1.1</span> 
 			<a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs" href="javascript:;">&#xe667;</a>
+			{% if user.is_admin|int == 1 %}
 			<nav class="nav navbar-nav">
 				<ul class="cl">
 					<li class="dropDown dropDown_hover"><a href="javascript:;" class="dropDown_A"><i class="Hui-iconfont">&#xe600;</i> 快捷 <i class="Hui-iconfont">&#xe6d5;</i></a>
@@ -18,6 +19,7 @@
 					</li>
 				</ul>
 			</nav>
+			
 			<nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
 				<ul class="cl">{% block content %}
 					<li>{{user.fullname}}</li>
@@ -36,6 +38,7 @@
 					</li>
 				</ul>
 			</nav>
+			{% endif %}
 		</div>
 	</div>
 </header>

@@ -36,7 +36,7 @@
 				<td><input type="checkbox" value="1" name=""></td>
 				{% set user_loop = loop %}
 				<td>{{ user_loop.index }}</td>
-				<td><u style="cursor:pointer" class="text-primary" onclick="member_show('用户信息','/users/info/{{user.username}}','','420','420')">{{ user.fullname }}</u></td>
+				<td><u style="cursor:pointer" class="text-primary" onclick="member_show('用户权限','/users/auth/{{user.username}}','','660','510')">{{ user.fullname }}</u></td>
 				<td>{{ user.username }}</td>
 				<td style="text-align:left">{{ user.email }}</td>
 				<td style="text-align:left">{% if user.comments|string == "None" %}{% else %}{{ user.comments }}{% endif %}</td>
@@ -48,7 +48,7 @@
 				{% endif %}
 				<td class="td-manage">
 					<a title="编辑" href="javascript:;" onclick="member_edit('修改用户信息','/users/modify/{{user.username}}','4','','510')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-					<a style="text-decoration:none" class="ml-5" onClick="member_edit('修改密码','/users/modify/{{user.username}}','4','','510')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe63f;</i></a> 
+					<a style="text-decoration:none" class="ml-5" onClick="member_edit('用户组','/users/info/{{user.username}}','4','420','510')" href="javascript:;" title="修改密码"><i class="Hui-iconfont">&#xe62b;</i></a> 
 					<a title="删除" href="javascript:;" onclick="member_del('确认删除用户','/users/del/{{user.username}}','4','500','400')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
 				</td>
 			</tr>

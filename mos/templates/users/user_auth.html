@@ -1,10 +1,4 @@
 {% include "_meta.html" %}
-<script type="text/javascript">
-var bool=document.referrer.indexOf("add");
-if(bool>0){document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;添加用户成功");}
-var bool=document.referrer.indexOf("modify");
-if(bool>0){document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修改用户成功");}
-</script>
 <body>
 <div class="cl pd-20" style=" background-color:#5bacb6">
   <dl style="margin-left:10px; color:#fff">
@@ -13,35 +7,30 @@ if(bool>0){document.write("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;修改用户成�
   </dl>
 </div>
 <div class="page-container">
-	<div class="cl pd-5 bg-1 bk-gray mt-5">
-		<span class="l">
-			<form  class="form form-horizontal" action="/users" method="post">
-				<a title="添加到组" href="javascript:;" onclick="location='/users/join/{{user.id}}'" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加到组</a>
-			</form>
-		</span> 
-	</div>
 	<div class="mt-20">
 	<table class="table table-border table-bordered table-hover table-bg table-sort">
 		<thead>
 			<tr class="text-c">
 				<th width="35">ID</th>
-				<th width="200">用户组</th>
-				<th width="50">操作</th>
+				<th width="80">用户组</th>
+				<th width="80">配置库</th>
+				<th width="300">路径</th>
+				<th width="50">权限</th>
 			</tr>
 		</thead>
 		{% block body %}
 		<tbody>
-		{% for group in groups %}
+		{% for userauth in user_auths %}
 			<tr class="text-c">
-				{% set group_loop = loop %}
-				<td>{{ group_loop.index }}</td>
-				<td>{{ group[1] }}</td>
-				<td class="td-manage">
-					<a title="删除" href="javascript:;" onclick="location='/users/leave/{{ group[0] }}+{{user.id}}'" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-				</td>
+				{% set userauth_loop = loop %}
+				<td>{{ userauth_loop.index }}</td>
+				<td>{{ userauth[0] }}</td>
+				<td>{{ userauth[1] }}</td>
+				<td style="text-align:left">{{ userauth[2] }}</td>
+				<td>{{ userauth[3] }}</td>
 			</tr>
 		{% else %}
-			<tr><td colspan=3>用户不属于任何组</td></tr>
+			<tr><td colspan=5>用户没有任何权限</td></tr>
 		{% endfor %}
 		{% endblock %}
 		</tbody>
