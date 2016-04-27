@@ -23,6 +23,7 @@ def admin_required(func):
     def decorated_view(*args, **kwargs):
         if not current_user.is_authenticated:
             return lm.unauthorized()
+        #print(current_user.is_admin)
         if current_user.is_admin !=1:
             #return lm.unauthorized() 
             return redirect(url_for("mysvn"))
@@ -275,10 +276,10 @@ def user_modify(username):
 def user_info(username):
     u = User.query.filter_by(username = username).first()
     if u == None:
-        flash('User ' + username + ' not found.')
+        #flash('User ' + username + ' not found.')
         return redirect(url_for('index')) 
-    u.is_admin = Bool2Info('is_admin',u.is_admin)
-    u.is_active = Bool2Info('is_active',u.is_active)
+    #u.is_admin = Bool2Info('is_admin',u.is_admin)
+    #u.is_active = Bool2Info('is_active',u.is_active)
     groups = u.has_groups()
     return render_template('users/user_info.html',user = u,groups=groups)
 
