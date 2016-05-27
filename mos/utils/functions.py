@@ -3,7 +3,7 @@
 __author__="EIXXIE"
 
 from wtforms import Form, BooleanField, TextField, PasswordField, validators
-import os,os.path,time, platform,re
+import os,os.path,time, platform,re,subprocess
 from config import REPOS_DIRS
 from config import REPOS_BASE_URL
 
